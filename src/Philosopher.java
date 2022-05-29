@@ -41,4 +41,10 @@ public class Philosopher {
     {
         return ideas;
     }
+
+    public String getRandomIdea()
+    {
+        int random = (int) (Math.random() * ideas.length - 1);
+        return ideas[random];
+    }
 }

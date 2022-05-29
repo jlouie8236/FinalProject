@@ -19,14 +19,20 @@ public class ThoughtsAPI {
 
     public ArrayList<Thoughts> getSchools()
     {
-        String url = makeAPICall();
+        String url = makeAPICall("");
         ArrayList<Thoughts> schools = parseSchools(url);
+        String url2 = makeAPICall("?page=2");
+        ArrayList<Thoughts> secondSchool = parseSchools(url2);
+        for (int i = 0; i < secondSchool.size(); i++)
+        {
+            schools.add(secondSchool.get(i));
+        }
         return schools;
     }
 
-    public String makeAPICall()
+    public String makeAPICall(String page)
     {
-        String url = baseURL;
+        String url = baseURL + page;
         try {
             URI myUri = URI.create(url);
             HttpRequest request = HttpRequest.newBuilder().uri(myUri).build();

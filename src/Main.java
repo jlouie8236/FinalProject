@@ -3,10 +3,13 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args)
     {
+        PhilosopherController gui = new PhilosopherController();
+        /*
         System.out.println("Hello World!");
         System.out.println();
         PhilosopherAPI pAPI = new PhilosopherAPI();
         ArrayList<Philosopher> p = pAPI.getPhilosophers();
+        System.out.println(p.size());
 
         ThoughtsAPI tAPI = new ThoughtsAPI();
         ArrayList<Thoughts> t = tAPI.getSchools();
@@ -32,6 +35,6 @@ public class Main {
         {
             System.out.println(philo);
         }
-
+        */
     }
 }
