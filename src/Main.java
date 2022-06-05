@@ -4,6 +4,7 @@ public class Main {
     public static void main(String[] args)
     {
         PhilosopherController gui = new PhilosopherController();
+
         /*
         System.out.println("Hello World!");
         System.out.println();

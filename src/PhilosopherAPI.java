@@ -2,6 +2,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.awt.image.CropImageFilter;
+import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -23,6 +24,17 @@ public class PhilosopherAPI {
         String url = makeAPICall();
         ArrayList<Philosopher> philosophers = parsePhilosophers(url);
         return philosophers;
+    }
+
+    public ArrayList<String> getPhilosopherNames()
+    {
+        ArrayList<Philosopher> all = getPhilosophers();
+        ArrayList<String> names = new ArrayList<>();
+        for (Philosopher philosopher : all)
+        {
+            names.add(philosopher.getName());
+        }
+        return names;
     }
 
     public String makeAPICall()

@@ -2,6 +2,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.awt.image.CropImageFilter;
+import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -26,6 +27,17 @@ public class ThoughtsAPI {
         for (int i = 0; i < secondSchool.size(); i++)
         {
             schools.add(secondSchool.get(i));
+        }
+        return schools;
+    }
+
+    public ArrayList<String> getSchoolNames()
+    {
+        ArrayList<Thoughts> all = getSchools();
+        ArrayList<String> schools = new ArrayList<>();
+        for (Thoughts s : all)
+        {
+            schools.add(s.getThought());
         }
         return schools;
     }
