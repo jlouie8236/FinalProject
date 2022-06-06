@@ -20,6 +20,7 @@ public class PhilosopherController implements ActionListener
     private JPanel entryPanel;
     private JButton philosopherButton;
     private JButton schoolsButton;
+    private JTextArea mainTextArea;
 
     private ArrayList<Philosopher> philosophers;
     private ArrayList<Thoughts> schools;
@@ -30,12 +31,17 @@ public class PhilosopherController implements ActionListener
     public PhilosopherController()
     {
         frame = new JFrame("Philosopher Database");
-        currentInfo = new JLabel();
         entryField = new JTextField();
         philosopherClient = new PhilosopherAPI();
         schoolsClient = new ThoughtsAPI();
         philosophyPanel = new JPanel();
         entryPanel = new JPanel();
+        mainTextArea = new JTextArea();
+        mainTextArea.setColumns(45);
+        mainTextArea.setRows(35);
+        mainTextArea.setEditable(false);
+        mainTextArea.setOpaque(false);
+        mainTextArea.setLineWrap(true);
 
         philosopherButton = new JButton("Philosophers");
         schoolsButton = new JButton("Schools");
@@ -65,12 +71,11 @@ public class PhilosopherController implements ActionListener
         entryPanel2.add(entryField);
 
         //----------------------------------------------------------------
-        currentInfo.setText("<html>Welcome to the Philosophy Database!<br>Press a button to get started :)</html>");
-        currentInfo.setFont(new Font("Arial", Font.BOLD, 15));
-        currentInfo.setOpaque(false);
+        mainTextArea.setText("Welcome to the Philosophy Database!\nPress a button to get started :)");
+        mainTextArea.setFont(new Font("Arial", Font.BOLD, 15));
 
         philosophyPanel = new JPanel();
-        philosophyPanel.add(currentInfo);
+        philosophyPanel.add(mainTextArea);
 
         //---------------------------------------------------------------
         entryPanel = new JPanel();
@@ -101,14 +106,14 @@ public class PhilosopherController implements ActionListener
             isPhilosopher = true;
             philosophyPanel.removeAll();
             ArrayList<String> names = philosopherClient.getPhilosopherNames();
-            String list = "<html>";
+            String list = "";
             for (int i = 0; i < names.size(); i++)
             {
-                list += (i + 1) + ". " + names.get(i) + " <br>";
+                list += (i + 1) + ". " + names.get(i) + "\n";
             }
-            list += "</html>";
-            philosophyPanel.add(currentInfo);
-            currentInfo.setText(list);
+            philosophyPanel.add(mainTextArea);
+            mainTextArea.setText(list);
+
             //--------------------------------------------------------------------
             setUpEntryField();
         }
@@ -117,14 +122,13 @@ public class PhilosopherController implements ActionListener
             isSchools = true;
             philosophyPanel.removeAll();
             ArrayList<String> schools = schoolsClient.getSchoolNames();
-            String list = "<html>";
+            String list = "";
             for (int i = 0; i < schools.size(); i++)
             {
-                list += (i + 1) + ". " + schools.get(i) + " <br>";
+                list += (i + 1) + ". " + schools.get(i) + "\n";
             }
-            list += "</html>";
-            philosophyPanel.add(currentInfo);
-            currentInfo.setText(list);
+            philosophyPanel.add(mainTextArea);
+           mainTextArea.setText(list);
             //-------------------------------------------------------------------
             setUpEntryField();
         }
@@ -146,12 +150,12 @@ public class PhilosopherController implements ActionListener
             isPhilosopher = false;
             isSchools = false;
             philosophyPanel.removeAll();
-            philosophyPanel.add(currentInfo);
-            currentInfo.setText("<html>Welcome to the Philosophy Database!<br>Press a button to get started :)</html>");
+            philosophyPanel.add(mainTextArea);
+            mainTextArea.setText("Welcome to the Philosophy Database!\nPress a button to get started :)");
             entryPanel.removeAll();
             entryPanel.add(philosopherButton);
             entryPanel.add(schoolsButton);
-
+            frame.pack();
         }
     }
 
@@ -159,34 +163,34 @@ public class PhilosopherController implements ActionListener
     {
         Thoughts school = schools.get(index - 1);
         philosophyPanel.removeAll();
-        String schoolInfo = "<html>Name: " + school.getThought();
+        String schoolInfo = "Name: " + school.getThought();
         String[] creators = school.getPhilosophers();
-        schoolInfo += "<br>Creators: ";
+        schoolInfo += "\nCreators: ";
         for (String creator : creators)
         {
-            schoolInfo += "<br>" + creator;
+            schoolInfo += "\n" + creator;
         }
-        schoolInfo += "</html>";
-        JLabel schoolInfoLabel = new JLabel(schoolInfo);
-        philosophyPanel.add(schoolInfoLabel);
+        philosophyPanel.add(mainTextArea);
+        mainTextArea.setText(schoolInfo);
+        frame.pack();
     }
 
     private void loadPhilosopherInfo(int index)
     {
         Philosopher philosopher = philosophers.get(index - 1);
         philosophyPanel.removeAll();
-        String philosopherInfo = "<html> Name: " + philosopher.getName() +
-                                "<br> Era: " + philosopher.getEra() +
-                                "<br> Quote: " + philosopher.getRandomIdea();
+        String philosopherInfo = "Name: " + philosopher.getName() +
+                                "\nEra: " + philosopher.getEra() +
+                                "\nQuote: " + philosopher.getRandomIdea();
         String[] thoughts = philosopher.getSchoolsOfThought();
-        philosopherInfo += "<br> Schools: ";
+        philosopherInfo += "\nSchools: ";
         for (String thought : thoughts)
         {
-            philosopherInfo += "<br>" + thought;
+            philosopherInfo += "\n" + thought;
         }
-        philosopherInfo += "</html>";
-        JLabel philosopherInfoLabel = new JLabel(philosopherInfo);
-        philosophyPanel.add(philosopherInfoLabel);
+        philosophyPanel.add(mainTextArea);
+        mainTextArea.setText(philosopherInfo);
+        frame.pack();
 
         try {
             URL imageURL = new URL(philosopher.getPhoto());
@@ -213,6 +217,7 @@ public class PhilosopherController implements ActionListener
         entryPanel.add(entryField);
         entryPanel.add(submitButton);
         entryPanel.add(backButton);
+        frame.pack();
 
         submitButton.addActionListener(this);
         backButton.addActionListener(this);
