@@ -21,6 +21,7 @@ public class PhilosopherController implements ActionListener
     private JButton philosopherButton;
     private JButton schoolsButton;
     private JTextArea mainTextArea;
+    private JFrame imageFrame;
 
     private ArrayList<Philosopher> philosophers;
     private ArrayList<Thoughts> schools;
@@ -155,9 +156,13 @@ public class PhilosopherController implements ActionListener
             mainTextArea.setText("Welcome to the Philosophy Database!\nPress a button to get started :)");
             frame.pack();
             entryPanel.removeAll();
+            frame.pack();
             entryPanel.add(philosopherButton);
             entryPanel.add(schoolsButton);
             frame.pack();
+            if(imageFrame != null) {
+                imageFrame.dispose();
+            }
         }
     }
 
@@ -197,16 +202,16 @@ public class PhilosopherController implements ActionListener
         try {
             URL imageURL = new URL(philosopher.getPhoto());
             BufferedImage image = ImageIO.read(imageURL);
-            JFrame frame = new JFrame("Portrait of " + philosopher.getName());
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            imageFrame = new JFrame("Portrait of " + philosopher.getName());
+            imageFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             ImageIcon currentImage = new ImageIcon(image);
             Image imageData = currentImage.getImage();
             Image scaledImage = imageData.getScaledInstance(500, -1, Image.SCALE_SMOOTH);
             currentImage = new ImageIcon(scaledImage);
             JLabel philosopherImage = new JLabel(currentImage);
-            frame.add(philosopherImage);
-            frame.pack();
-            frame.setVisible(true);
+            imageFrame.add(philosopherImage);
+            imageFrame.pack();
+            imageFrame.setVisible(true);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
