@@ -37,8 +37,8 @@ public class PhilosopherController implements ActionListener
         philosophyPanel = new JPanel();
         entryPanel = new JPanel();
         mainTextArea = new JTextArea();
-        mainTextArea.setColumns(45);
-        mainTextArea.setRows(35);
+        mainTextArea.setColumns(35);
+        mainTextArea.setRows(30);
         mainTextArea.setEditable(false);
         mainTextArea.setOpaque(false);
         mainTextArea.setLineWrap(true);
@@ -59,7 +59,7 @@ public class PhilosopherController implements ActionListener
 
         JLabel welcomeLabel = new JLabel("Philosopher Database");
         welcomeLabel.setFont(new Font("Helvetica", Font.BOLD, 20));
-        welcomeLabel.setForeground(Color.black);
+        welcomeLabel.setForeground(Color.darkGray);
 
         JPanel logoWelcomePanel = new JPanel();
         logoWelcomePanel.add(welcomeLabel);
@@ -73,6 +73,7 @@ public class PhilosopherController implements ActionListener
         //----------------------------------------------------------------
         mainTextArea.setText("Welcome to the Philosophy Database!\nPress a button to get started :)");
         mainTextArea.setFont(new Font("Arial", Font.BOLD, 15));
+        mainTextArea.setForeground(Color.darkGray);
 
         philosophyPanel = new JPanel();
         philosophyPanel.add(mainTextArea);
@@ -152,6 +153,7 @@ public class PhilosopherController implements ActionListener
             philosophyPanel.removeAll();
             philosophyPanel.add(mainTextArea);
             mainTextArea.setText("Welcome to the Philosophy Database!\nPress a button to get started :)");
+            frame.pack();
             entryPanel.removeAll();
             entryPanel.add(philosopherButton);
             entryPanel.add(schoolsButton);
@@ -197,7 +199,11 @@ public class PhilosopherController implements ActionListener
             BufferedImage image = ImageIO.read(imageURL);
             JFrame frame = new JFrame("Portrait of " + philosopher.getName());
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            JLabel philosopherImage = new JLabel(new ImageIcon(image));
+            ImageIcon currentImage = new ImageIcon(image);
+            Image imageData = currentImage.getImage();
+            Image scaledImage = imageData.getScaledInstance(500, -1, Image.SCALE_SMOOTH);
+            currentImage = new ImageIcon(scaledImage);
+            JLabel philosopherImage = new JLabel(currentImage);
             frame.add(philosopherImage);
             frame.pack();
             frame.setVisible(true);
